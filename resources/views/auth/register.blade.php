@@ -14,7 +14,7 @@
                             <a href="{{ route('login') }}">Sign in here</a>
                         </p>
 
-                        <a href="#" class="btn btn-lg rounded btn-outline-dark w-100">
+                        <a href="{{ route('google_auth') }}" class="btn btn-google btn-user btn-block rounded btn-outline-dark w-100">
                             Sign in with Google
                         </a>
 
