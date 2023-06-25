@@ -28,10 +28,10 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{ route('login') }}">Login</a>
+                        <a class="nav-link text-primary" aria-current="page" href="{{ route('login') }}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Register</a>
+                        <a class="nav-link text-primary" href="{{ route('register') }}">Register</a>
                     </li>
                 @endguest
                 @auth
@@ -57,8 +57,9 @@
 
 @yield("content")
 
-<div class="bg-primary text-light py-4 text-center">
-    &copy; {{ date("Y") }} MMS IT. All Rights Reversed.
+<hr>
+<div class="navbar-light mt-0 bg-light text-primary py-2 text-center shadow-sm">
+    &copy; {{ date("Y") }} #theExplorery #thinkabyaroo. All Rights Reversed.
 </div>
 <script src="{{ asset('js/app.js') }}"></script>
 @stack("scripts")

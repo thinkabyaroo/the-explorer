@@ -48,8 +48,6 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-
-
         $newName = "cover_".uniqid()."_".$request->file('cover')->extension();
         $request->file('cover')->storeAs("public/cover",$newName);
 
@@ -61,7 +59,7 @@ class PostController extends Controller
         $post->cover = $newName;
         $post->user_id = Auth::id();
         $post->save();
-
+        return redirect()->route("index");
 //        $postMail=new PostMail($request->title,$request->description);
 //        $postMail ->from('tko@mms-student.online',"Example Department");
 
@@ -71,8 +69,6 @@ class PostController extends Controller
 
         }
 
-
-        return redirect()->route("index");
     }
 
     /**

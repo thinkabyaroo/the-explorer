@@ -10,7 +10,7 @@
                         <h4 class="fw-bold mb-4">{{ $post->title }}</h4>
                         <img src="{{ asset("storage/cover/".$post->cover) }}" class="cover-img rounded-3 mb-4 w-100" alt="">
 
-                        <p class="text-black-50 mb-4 post-detail">
+                        <p class="text-black mb-4 post-detail">
                             {{ $post->description }}
                         </p>
 

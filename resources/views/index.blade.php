@@ -2,7 +2,40 @@
 @section('content')
 
     <div class="container">
+
         <div class="row justify-content-center">
+            <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm " >
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-3 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-primary " aria-current="page"  href="#">All</a>
+                        </li>
+                        <a class="nav-link text-primary" href="#">Beauty</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="#">Technology</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="#">Health</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="#">Fashion</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="#">Sports</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-primary" href="#">Entertainment</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex ms-auto">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn" type="submit"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+
+                </div>
+            </nav>
+            <div class="py-3"></div>
             <div class="col-lg-10 col-xl-8">
                 @auth
                     <div class="border rounded-3 p-4 d-flex justify-content-between align-items-center mb-4">
