@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Mail\PostMail;
+use App\Models\Category;
+use App\Models\CategoryPost;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Mail;
@@ -37,7 +40,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view("post.create");
+        $categories = Category::latest("id")->get();
+        return view('post.create',["categories"=>$categories]);
     }
 
     /**
@@ -48,6 +52,12 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        $request->validate([
+            "title"=> "required|min:3|max:100",
+            "description" => "required",
+            "category" => "required",
+            "category.*" => "exists:categories,id",
+        ]);
         $newName = "cover_".uniqid()."_".$request->file('cover')->extension();
         $request->file('cover')->storeAs("public/cover",$newName);
 
@@ -59,6 +69,14 @@ class PostController extends Controller
         $post->cover = $newName;
         $post->user_id = Auth::id();
         $post->save();
+
+        foreach ($request->category as $category){
+            $cp = new CategoryPost();
+            $cp->category_id = $category;
+            $cp->post_id = $post->id;
+            $cp->save();
+        }
+
         return redirect()->route("index");
 //        $postMail=new PostMail($request->title,$request->description);
 //        $postMail ->from('tko@mms-student.online',"Example Department");

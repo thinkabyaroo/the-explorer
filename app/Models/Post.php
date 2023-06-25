@@ -20,4 +20,8 @@ class Post extends Model
     public function galleries(){
         return $this->hasMany(Gallery::class);
     }
+
+    public function categories(){
+        return $this->belongsToMany(Category::class,'category_posts')->withPivot("id","created_at");
+    }
 }

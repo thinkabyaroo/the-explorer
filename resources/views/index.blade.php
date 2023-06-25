@@ -60,7 +60,14 @@
                                 <div class="d-flex flex-column justify-content-between h-350 py-4">
                                     <div class="">
                                         <h4 class="fw-bold">{{ $post->title }}</h4>
-                                        <p class="text-black-50">
+                                         <div>
+                                             @foreach($post->categories as $category)
+                                                 <span class="badge bg-primary rounded-pill">
+                                                    {{$category->title}}
+                                                 </span>
+                                             @endforeach
+                                         </div>
+                                        <p class="text-black">
                                             {{ $post->excerpt }}
                                         </p>
                                     </div>
