@@ -7,46 +7,23 @@
             <nav class="navbar navbar-expand-sm navbar-light bg-white shadow-sm " >
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mb-3 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link text-primary " aria-current="page"  href="#">All</a>
-                        </li>
-                        <a class="nav-link text-primary" href="#">Beauty</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-primary" href="#">Technology</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-primary" href="#">Health</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-primary" href="#">Fashion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-primary" href="#">Sports</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-primary" href="#">Entertainment</a>
-                        </li>
+                        @foreach($categories as $category)
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" href="#">{{$category->title}}</a>
+                            </li>
+                        @endforeach
                     </ul>
-                    <form class="d-flex ms-auto">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn" type="submit"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+                    <form class="d-flex ms-auto" type="get" action="{{route('post.search')}}">
+                        <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
                     </form>
+                    @auth
+                        <a href="{{ route('post.create') }}" class="btn btn-primary">Create Post</a>
+                    @endauth
 
                 </div>
             </nav>
             <div class="py-3"></div>
             <div class="col-lg-10 col-xl-8">
-                @auth
-                    <div class="border rounded-3 p-4 d-flex justify-content-between align-items-center mb-4">
-                        <h4 class="text-black-50 fw-bold">
-                            Welcome
-                            <br>
-                            <span class="text-dark">{{ auth()->user()->name }}</span>
-                        </h4>
-                        <a href="{{ route('post.create') }}" class="btn btn-lg btn-primary">Create Post</a>
-                    </div>
-                @endauth
 
                 <div class="posts">
                     @forelse($posts as $post)
@@ -80,8 +57,21 @@
                                                 <i class="fas fa-calendar"></i>
                                                 {{ $post->created_at->format("d M Y") }}
                                             </p>
+
                                         </div>
-                                        <a href="{{ route('post.detail',$post->slug) }}" class="btn btn-outline-primary">Read More</a>
+                                        <div class="d-flex">
+                                            <p class="mb-0 small">
+                                                <br>
+                                                <i class="fa-regular fa-comment fa-lg"></i>
+                                                <span>
+                                                    {{count($post->comments) }}
+                                                    @if(count($post->comments) > 1)comments
+                                                    @else comment
+                                                    @endif
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <a href="{{ route('post.detail',$post->slug) }}" class="btn btn-outline-primary" >Read More</a>
                                     </div>
                                 </div>
                             </div>
@@ -92,8 +82,6 @@
 
                     @endforelse
                 </div>
-
-
             </div>
         </div>
     </div>

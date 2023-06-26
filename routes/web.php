@@ -16,6 +16,7 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/',[PageController::class,'index'])->name("index");
 Route::get("/detail/{slug}",[PageController::class,'detail'])->name("post.detail");
+Route::get("/search",[PageController::class,'search'])->name("post.search");
 
 Auth::routes();
 
