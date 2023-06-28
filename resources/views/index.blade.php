@@ -71,7 +71,7 @@
                                                 </span>
                                             </p>
                                         </div>
-                                        <a href="{{ route('post.detail',$post->slug) }}" class="btn btn-outline-primary" >Read More</a>
+                                        <a href="{{ route('post.detail',$post->slug,$categories) }}" class="btn btn-outline-primary" >Read More</a>
                                     </div>
                                 </div>
                             </div>

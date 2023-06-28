@@ -70,7 +70,13 @@ class CategoryPostController extends Controller
      */
     public function update(UpdateCategoryPostRequest $request, CategoryPost $categoryPost)
     {
-        //
+        $request->validate([
+            "category_id" => "required"
+        ]);
+
+        $categoryPost->category_id = $request->category_id;
+        $categoryPost->update();
+        return redirect()->back();
     }
 
     /**

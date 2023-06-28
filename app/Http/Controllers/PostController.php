@@ -70,13 +70,14 @@ class PostController extends Controller
         $post->user_id = Auth::id();
         $post->save();
 
+//        $post->categories()->attach($request->categories);
+
         foreach ($request->category as $category){
             $cp = new CategoryPost();
             $cp->category_id = $category;
             $cp->post_id = $post->id;
             $cp->save();
         }
-
         return redirect()->route("index");
 //        $postMail=new PostMail($request->title,$request->description);
 //        $postMail ->from('tko@mms-student.online',"Example Department");
@@ -84,11 +85,8 @@ class PostController extends Controller
         $mailArr=['thinkabyaroo2911@gmail.com','thinkabyaroo29@gmail.com'];
         foreach ($mailArr as $mail){
             Mail::to($mail)->send(new PostMail($post->title,$post->description));
-
         }
-
     }
-
     /**
      * Display the specified resource.
      *
@@ -109,7 +107,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         Gate::authorize('update',$post);
-        return view('post.edit',compact('post'));
+        $categories = Category::latest("id")->get();
+        return view('post.edit',compact('post'),["categories"=>$categories]);
     }
 
     /**
@@ -121,31 +120,34 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-
-
+        $request->validate([
+            "title"=> "required|min:3|max:100",
+            "description" => "required",
+            "category" => "required",
+            "category.*" => "exists:categories,id",
+        ]);
         $post->title = $request->title;
         $post->slug = Str::slug($post->title);
-
         $post->description = $request->description;
         $post->excerpt = Str::words($request->description,50);
 
         if($request->hasFile('cover')){
-
             //delete old cover
             Storage::delete("public/cover/".$post->cover);
-
             //upload new cover
             $newName = "cover_".uniqid()."_".$request->file('cover')->extension();
             $request->file('cover')->storeAs("public/cover",$newName);
-
             // save to table
             $post->cover = $newName;
-
         }
-
         $post->update();
-
-
+        $post->categories()->detach();
+        foreach ($request->category as $category){
+            $cp = new CategoryPost();
+            $cp->category_id = $category;
+            $cp->post_id = $post->id;
+            $cp->save();
+        }
         return redirect()->route("post.detail",$post->slug);
     }
 
@@ -158,6 +160,9 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         Gate::authorize('delete',$post);
+
+        //delete pivot records
+        $post->categories()->detach();
 
         Storage::delete("public/cover/".$post->cover);
         $post->delete();

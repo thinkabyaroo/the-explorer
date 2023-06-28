@@ -23,7 +23,6 @@
                                 <div class="invalid-feedback ps-2">{{ $message }}</div>
                                 @enderror
                             </div>
-
                             <div class="mb-4">
                                 <img src="{{ asset('image-default.png') }}" id="coverPreview" class="cover-img w-100 rounded @error('cover') border border-danger is-invalid @enderror" alt="">
                                 <input type="file" name="cover" class="d-none" id="cover" accept="image/jpeg,image/png">
@@ -35,7 +34,6 @@
                         <div class="col col-md-3 form-floating mb-4 ms-auto">
                             <div class="my-4 text-capitalize">
                                 <label for="Choose Category">
-                                    <i class="fa-sharp fa-regular fa-face-smile fa-xl"></i>
                                     Choose Category
                                     <i class="fa-sharp fa-regular fa-face-smile fa-xl"></i>
                                 </label>
@@ -43,7 +41,7 @@
                             <div>
                                 @foreach($categories as $category)
                                     <div class="form-check">
-                                        <input class="form-check-input" form="postCreate" type="checkbox" name="category[]" {{ in_array($category->id,old('category',[])) ? 'checked' : '' }} value="{{ $category->id }}" id="cat{{ $category->id }}">
+                                        <input class="form-check-input" form="postCreate" type="checkbox" name="category[]"  value="{{ $category->id }}" id="cat{{ $category->id }}">
                                         <label class="form-check-label" for="cat{{ $category->id }}">
                                             {{ $category->title }}
                                         </label>
@@ -52,23 +50,19 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="form-floating mb-4">
-                        <textarea name="description" class="form-control @error('description') is-invalid @enderror" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 450px">{{ old('description') }}</textarea>
+                        <textarea name="description" class="form-control @error('description') is-invalid @enderror" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px">{{ old('description') }}</textarea>
                         <label for="floatingTextarea2">Share Your Experience</label>
                         @error('description')
                         <div class="invalid-feedback ps-2">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="text-center mb-4">
                         <button class="btn btn-lg btn-primary">
                             <i class="fas fa-message fa-fw"></i>
                             Create Post
                         </button>
                     </div>
-
                 </form>
             </div>
         </div>

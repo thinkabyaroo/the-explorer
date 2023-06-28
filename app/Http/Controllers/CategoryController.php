@@ -87,10 +87,9 @@ class CategoryController extends Controller
         $request->validate([
             "title" => "required|min:3|max:200|unique:categories,title,".$category->id
         ]);
-
         $category->title = $request->title;
         $category->update();
-        return redirect()->route('category.create')->with("toast",Info::showToast("success","Category Updated"));
+        return redirect()->route('category.create');
 
     }
 
@@ -102,6 +101,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->back()->with('status','deleted');
     }
 }
