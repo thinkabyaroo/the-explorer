@@ -39,15 +39,18 @@
                                 </label>
                             </div>
                             <div>
-                                @for($x=0;$x< $categories->count();$x++)
+
+                                @for($x=0; $x < $categories->count() ;$x++)
                                     <div class="form-check">
                                         <input class="form-check-input" form="post-edit" type="checkbox" name="category[]"
-                                               {{$categories[$x] == isset($post->categories[$x])  ? 'checked': ''}} value="{{$categories[$x]->id}}" id="cat{{ $categories[$x]->id }}" >
+                                               @for($y=0; $y < $post->categories->count() ;$y++)
+                                               {{  isset($post->categories[$y])?$post->categories[$y]->title ==$categories[$x]->title?'checked':'' :'' }}
+                                               @endfor value="{{$categories[$x]->id}}" id="cat{{ $categories[$x]->id }}" >
                                         <label class="form-check-label" for="cat{{ $categories[$x]->id }}">
                                             {{ $categories[$x]->title }}
                                         </label>
                                     </div>
-                                    @endfor
+                                @endfor
                             </div>
                         </div>
                     </div>

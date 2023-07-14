@@ -9,7 +9,7 @@
                     <ul class="navbar-nav mb-3 mb-lg-0">
                         @foreach($categories as $category)
                             <li class="nav-item">
-                                <a class="nav-link text-primary" href="#">{{$category->title}}</a>
+                                <a class="nav-link text-primary" href="{{route('post.filter',$category->id)}}">{{$category->title}}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -27,7 +27,6 @@
 
                 <div class="posts">
                     @forelse($posts as $post)
-
                     <div class="post mb-4">
                         <div class="row">
                             <div class="col-lg-4">
@@ -77,9 +76,7 @@
                             </div>
                         </div>
                     </div>
-
                     @empty
-
                     @endforelse
                 </div>
             </div>
